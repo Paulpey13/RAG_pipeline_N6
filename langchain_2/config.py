@@ -8,3 +8,4 @@ EMBEDDING_MODEL_NAME = "BAAI/bge-m3"
 #"all-MiniLM-L6-v2"
 COLLECTION_NAME = "rag_collection"
 PROGRESS_FILE = "indexed_files.json"
+BATCH_SIZE=128

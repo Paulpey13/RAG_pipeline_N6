@@ -1,8 +1,7 @@
 from sentence_transformers import SentenceTransformer
-from config import EMBEDDING_MODEL_NAME
+from config import EMBEDDING_MODEL_NAME,BATCH_SIZE
 
-embedding_model = SentenceTransformer(EMBEDDING_MODEL_NAME)
-# model = SentenceTransformer("BAAI/bge-m3", device="cuda")
+embedding_model = SentenceTransformer(EMBEDDING_MODEL_NAME, device="cuda")  # forcer GPU
 
-def embed_texts(texts):
-    return embedding_model.encode(texts, show_progress_bar=True)
+def embed_texts(texts, batch_size=BATCH_SIZE):
+    return embedding_model.encode(texts, batch_size=batch_size, show_progress_bar=True)
