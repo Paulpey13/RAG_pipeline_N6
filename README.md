@@ -28,7 +28,7 @@ Components
    - Sends a question prompt and prints the model's answer.
 
 6. **[BUILDING] Another RAG Pipeline using langchain**
-    - Not used yet because way more time consuming
+    - Not used yet because execution is way more time consuming
 
 
 Setup and Requirements
