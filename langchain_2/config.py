@@ -1,6 +1,6 @@
 from pathlib import Path
 
-DATA_FOLDER = Path("C:/Users/Paul/Documents/code/Databases/Data_test")
+DATA_FOLDER = Path("C:/SynologyDrive/VITRO/ETUDES/2024/OTT24.01 SOD screening")
 CHROMA_DIR = Path("chroma_db")
 CHUNK_SIZE = 800
 CHUNK_OVERLAP = 100

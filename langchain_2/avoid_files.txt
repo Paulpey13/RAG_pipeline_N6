@@ -1,0 +1,3 @@
+# Exclure tous les fichiers nommés indexfile.txt n’importe où
+**/indexfile.txt
+

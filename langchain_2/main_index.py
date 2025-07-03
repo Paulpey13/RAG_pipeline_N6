@@ -7,13 +7,19 @@ from loaders import load_file
 from splitter import split_documents
 from embedding import embed_texts
 from vectorstore import reset_collection
+from filter import filter_files
 
 def load_progress():
     progress_path = Path(PROGRESS_FILE)
     if progress_path.exists():
-        with open(progress_path, "r") as f:
-            return json.load(f)
+        try:
+            with open(progress_path, "r") as f:
+                return json.load(f)
+        except json.JSONDecodeError:
+            # Fichier vide ou mal formé => réinitialiser
+            return {}
     return {}
+
 
 def save_progress(data):
     with open(PROGRESS_FILE, "w") as f:
@@ -26,11 +32,12 @@ def index_data():
     indexed_files = load_progress()
     files = list(DATA_FOLDER.glob("**/*.*"))
 
-    for f in tqdm(files, desc="Loading files"):
+    filtered_files = filter_files(files, DATA_FOLDER)
+
+    for f in tqdm(filtered_files, desc="Loading files"):
         mtime = f.stat().st_mtime
         str_path = str(f)
         if str_path in indexed_files and indexed_files[str_path] == mtime:
-            # Fichier déjà indexé et inchangé
             continue
         try:
             loaded_docs = load_file(f)
@@ -38,8 +45,8 @@ def index_data():
                 doc.metadata["source"] = str(f)
             chunks = split_documents(loaded_docs)
             docs.extend(chunks)
-            indexed_files[str_path] = mtime  # Marquer comme indexé
-            save_progress(indexed_files)    # Sauvegarde après chaque fichier
+            indexed_files[str_path] = mtime
+            save_progress(indexed_files)
         except Exception as e:
             print(f"Error loading {f}: {e}")
 
