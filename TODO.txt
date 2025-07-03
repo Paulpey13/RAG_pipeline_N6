@@ -1,0 +1,10 @@
+
+
+
+Il faut virer les indexfile.txt car inutile et lourd
+
+
+Empbedding time sur 150MO :
+
+API mistral 1h +
+BAAI/bge-m3 en local : 1.10 min
