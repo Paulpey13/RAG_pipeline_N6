@@ -8,7 +8,7 @@ from main_config import *
 # Initialisations
 client = chromadb.PersistentClient(path=str(CHROMA_PATH))
 collection = client.get_collection("bge_docs")
-model = SentenceTransformer("BAAI/bge-large-en-v1.5", device="cuda")
+model = SentenceTransformer(EMBEDDING_MODEL, device="cuda")
 
 MISTRAL_API_URL = "https://api.mistral.ai/v1/generate"
 MISTRAL_API_KEY = os.environ["MISTRAL_API_KEY"]
@@ -16,7 +16,7 @@ MISTRAL_API_KEY = os.environ["MISTRAL_API_KEY"]
 def embed_query(query):
     return model.encode([query], device="cuda")[0]
 
-def retrieve_docs(query_embedding, top_k=1):
+def retrieve_docs(query_embedding, top_k=3):
     results = collection.query(
         query_embeddings=[query_embedding.tolist()],
         n_results=top_k,
@@ -63,5 +63,5 @@ def rag_pipeline(question):
     return answer
 
 # Test
-question = "2+2 = ?"
+question = "Analyse LIST OF TESTED COMPOUNDS"
 print(rag_pipeline(question))
