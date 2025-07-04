@@ -3,7 +3,6 @@
 **/__pycache__/
 *.py[cod]
 
-# Fichiers de suivi d'indexation
 indexed_files.json
 progress_tracker.jsonl
 test/

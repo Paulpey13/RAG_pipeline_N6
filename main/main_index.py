@@ -84,7 +84,7 @@ def main():
     for file in tqdm(files, desc="Indexing"):
         if not file.is_file():
             continue
-        if file.suffix.lower() not in [".txt", ".pdf", ".docx"]:
+        if file.suffix.lower() not in [".txt", ".pdf", ".docx",'.csv','.xlsx','.xls']:
             continue
         if file.name in ignored_filenames:  
             continue
