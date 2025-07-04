@@ -1,0 +1,10 @@
+**/chroma_db/
+# Ignorer tous les fichiers de cache Python
+**/__pycache__/
+*.py[cod]
+
+# Fichiers de suivi d'indexation
+indexed_files.json
+progress_tracker.jsonl
+test/
+**/exported_chunks.txt
