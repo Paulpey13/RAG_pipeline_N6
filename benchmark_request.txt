@@ -1,3 +1,4 @@
 Liste tous les fichiers dans ton contexte
 Que peux-tu dire à propos de OTT24
 Quels sont les composants testés ? (TESTED COMPOUNDS)
+Fais une analyse statistique de plate_results.txt

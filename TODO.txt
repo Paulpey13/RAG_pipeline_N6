@@ -5,3 +5,18 @@ BAAI/bge-m3 en local : 1.10 min
 
 
 handle docx2txt with langchain
+
+
+
+
+Fichiers dont l'intégration dans le RAG est à discuter avec VITRO :
+PlateResults.txt
+
+
+Fichiers dont l'intégration dans le RAG est à discuter avec VITRO :
+
+
+
+Fichiers dont l'intégration dans le RAG est à discuter avec ADMIN :
+
+

@@ -37,14 +37,14 @@ Réponse précise et complète en français :"""
     }
 
     data = {
-        "model": "mistral-small-2506",  # ou "mistral-small-latest" selon ton offre
+        "model": "mistral-large-2407",  # ou "mistral-small-latest" selon ton offre
         "messages": [
             {"role": "system", "content": "Tu es un expert qui répond en français de manière claire et précise."},
             {"role": "user", "content": prompt}
         ],
         "temperature": 0.7,
         "top_p": 0.9,
-        "max_tokens": 512,
+        "max_tokens": 5120,
     }
 
     response = requests.post("https://api.mistral.ai/v1/chat/completions", headers=headers, json=data)
@@ -63,5 +63,5 @@ def rag_pipeline(question):
     return answer
 
 # Test
-question = "Analyse LIST OF TESTED COMPOUNDS"
+question = "Fais une analyse statistique de plate_results.txt"
 print(rag_pipeline(question))

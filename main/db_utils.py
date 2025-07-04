@@ -116,4 +116,4 @@ def delete_chunks_by_partial_path(substring: str): # Peut être à modifier pour
     collection.delete(ids=ids_to_delete)
     print(f"{len(ids_to_delete)} chunks supprimés contenant '{substring}' dans leur chemin.")
 
-get_largest_sources()
+export_all_chunks_to_file()

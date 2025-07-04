@@ -69,9 +69,16 @@ def process_file(file: Path):
             embeddings=embeddings
         )
 
+def load_ignored_filenames():
+    ignore_path = IGNORE_PATH
+    if not ignore_path.exists():
+        return set()
+    return set(line.strip() for line in ignore_path.read_text().splitlines())
+
 def main():
     print("[START] Indexation avec BGE local")
     done = load_progress()
+    ignored_filenames = load_ignored_filenames()
     files = list(SOURCE_FOLDER.rglob("*"))
 
     for file in tqdm(files, desc="Indexing"):
@@ -79,7 +86,7 @@ def main():
             continue
         if file.suffix.lower() not in [".txt", ".pdf", ".docx"]:
             continue
-        if "indexfile.txt" in file.name:
+        if file.name in ignored_filenames:  
             continue
         str_path = str(file.resolve())
         if str_path in done:
@@ -89,6 +96,8 @@ def main():
         save_progress(str_path)
 
     print("[FIN] Indexation locale terminée")
+
+
 
 if __name__ == "__main__":
     main()

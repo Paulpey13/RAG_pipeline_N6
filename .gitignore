@@ -8,3 +8,4 @@ indexed_files.json
 progress_tracker.jsonl
 test/
 **/exported_chunks.txt
+**/files_to_ignore.txt
