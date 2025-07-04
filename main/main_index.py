@@ -15,7 +15,7 @@ client = chromadb.PersistentClient(path=str(CHROMA_PATH))
 collection = client.get_or_create_collection(name="bge_docs")
 
 # Init modèle embedding local (GPU)
-model = SentenceTransformer("BAAI/bge-m3", device="cuda")
+model = SentenceTransformer(EMBEDDING_MODEL, device="cuda")
 
 def load_progress():
     if not PROGRESS_FILE.exists():
