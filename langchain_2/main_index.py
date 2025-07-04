@@ -34,6 +34,11 @@ def process_file(f):
         print(f"Error processing {f}: {e}")
         return []
 
+def batch(iterable, batch_size):
+    for i in range(0, len(iterable), batch_size):
+        yield iterable[i:i + batch_size]
+
+
 def index_data():
     collection = reset_collection()
     indexed_files = load_progress()
@@ -63,12 +68,18 @@ def index_data():
         texts = [d.page_content for d in new_docs]
         metadatas = [d.metadata for d in new_docs]
         embeddings = embed_texts(texts, batch_size=BATCH_SIZE)
-        collection.add(
-            documents=texts,
-            embeddings=embeddings.tolist(),
-            metadatas=metadatas,
-            ids=[f"doc_{i}" for i in range(len(texts))]
-        )
+        for i, (batch_texts, batch_embeddings, batch_metas) in enumerate(zip(
+            batch(texts, 5000),
+            batch(embeddings.tolist(), 5000),
+            batch(metadatas, 5000)
+        )):
+            collection.add(
+                documents=batch_texts,
+                embeddings=batch_embeddings,
+                metadatas=batch_metas,
+                ids=[f"doc_{i}_{j}" for j in range(len(batch_texts))]
+            )
+
         save_progress(updated_indexed_files)
         print(f"Indexed {len(new_docs)} new chunks")
     else:
