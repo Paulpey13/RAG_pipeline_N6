@@ -20,7 +20,8 @@ model = SentenceTransformer(EMBEDDING_MODEL, device="cuda")
 def load_progress():
     if not PROGRESS_FILE.exists():
         return set()
-    return set(line.strip() for line in PROGRESS_FILE.read_text().splitlines())
+    return set(line.strip() for line in PROGRESS_FILE.read_text(encoding="utf-8").splitlines())
+
 
 def save_progress(path):
     with PROGRESS_FILE.open("a", encoding="utf-8") as f:
@@ -81,13 +82,27 @@ def main():
     ignored_filenames = load_ignored_filenames()
     files = list(SOURCE_FOLDER.rglob("*"))
 
-    for file in tqdm(files, desc="Indexing"):
+    # Étape de filtrage et sélection préférentielle des .docx
+    base_name_map = {}
+    for file in files:
         if not file.is_file():
             continue
-        if file.suffix.lower() not in [".txt", ".pdf", ".docx",'.csv','.xlsx','.xls']:
+        if file.suffix.lower() not in [".pdf", ".docx"]:
             continue
-        if file.name in ignored_filenames:  
+        if file.name in ignored_filenames:
             continue
+
+        base_name = file.stem  # nom sans extension
+        existing = base_name_map.get(base_name)
+
+        if not existing:
+            base_name_map[base_name] = file
+        else:
+            # Si le nouveau est un .docx, il écrase le .pdf existant
+            if file.suffix.lower() == ".docx":
+                base_name_map[base_name] = file
+
+    for file in tqdm(base_name_map.values(), desc="Indexing"):
         str_path = str(file.resolve())
         if str_path in done:
             continue
@@ -96,7 +111,6 @@ def main():
         save_progress(str_path)
 
     print("[FIN] Indexation locale terminée")
-
 
 
 if __name__ == "__main__":

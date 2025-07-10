@@ -2,7 +2,9 @@ from pathlib import Path
 
 CHROMA_PATH = Path("./chroma_db")
 # SOURCE_FOLDER = Path(r"C:/Users/Paul/Documents/code/Databases/Data_test/OTT24")
-SOURCE_FOLDER = Path("C:/SynologyDrive/VITRO/ETUDES/2024/OTT24.01 SOD screening")
+# SOURCE_FOLDER = Path("C:/SynologyDrive/VITRO/ETUDES/2024/OTT24.01 SOD screening")
+SOURCE_FOLDER = Path("C:/SynologyDrive/VITRO/CLIENTS/")
+
 
 CHUNK_SIZE = 500
 CHUNK_OVERLAP = 50
